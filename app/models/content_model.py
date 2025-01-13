@@ -18,8 +18,7 @@ class ContentModel(Base):
     updated_at: Mapped[datetime] = mapped_column(default=datetime.now(ZoneInfo('Asia/Jakarta')))
 
 class ContentSchema(BaseModel): 
-    name: str
-    title: str
+    title: str 
     slug: str
     description: str
     content: str 

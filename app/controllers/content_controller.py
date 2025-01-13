@@ -8,8 +8,11 @@ class ContentController(object):
     def get_all(db: Session):
         try:
             datas = db.query(ContentModel).all()
-            datas = list(datas)
-            return datas
+            datas_final = []
+            for data in datas:
+                del data.content
+                datas_final.append(data)
+            return datas_final
         except Exception as e:
             error_msg = f"Internal server error occurred: {str(e)}"
             raise HTTPException(status_code=500, detail=error_msg) from e
