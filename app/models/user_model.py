@@ -12,19 +12,14 @@ class UserModel(Base):
     fullname: Mapped[str] = mapped_column(nullable=True)
     role: Mapped[str] = mapped_column(nullable=True)
     is_active: Mapped[bool] = mapped_column(default=False)
-    created_by: Mapped[int] = mapped_column(nullable=False)
+    created_by: Mapped[int] = mapped_column(nullable=True)
     created_at: Mapped[datetime] = mapped_column(default=datetime.now(ZoneInfo('Asia/Jakarta')))
-    updated_by: Mapped[int] = mapped_column(nullable=False)
+    updated_by: Mapped[int] = mapped_column(nullable=True)
     updated_at: Mapped[datetime] = mapped_column(default=datetime.now(ZoneInfo('Asia/Jakarta')))
 
 class UserSchema(BaseModel): 
     username: str
     password: str
     fullname: str
-    role: str 
-    is_active: bool
-    created_by: int
-    created_at: datetime
-    updated_by: int
-    updated_at: datetime
+    role: str  
  
