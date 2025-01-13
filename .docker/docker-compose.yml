@@ -7,8 +7,5 @@ services:
       - .env
     ports:
       - "2040:8000"
-    # volumes:
-    #   - /home/app/fastapi-postgres-testcase/uploads:/var/www/public/uploads
-    #   - /home/app/fastapi-postgres-testcase/storage/framework:/var/www/storage/framework
-    #   - /home/app/fastapi-postgres-testcase/storage/logs:/var/www/storage/logs
+    # volumes: 
     restart: always
