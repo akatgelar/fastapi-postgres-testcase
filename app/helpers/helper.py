@@ -50,7 +50,7 @@ class Helper:
                 "data": data,
             }
             
-    def get_hashed_password(password: str) -> str: 
+    def hashed_password(password: str) -> str: 
         password_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
         return password_context.hash(password)
 
@@ -69,12 +69,12 @@ class Helper:
         encoded_jwt = jwt.encode(to_encode, config.JWT_SECRET_KEY, config.ALGORITHM)
         return encoded_jwt
 
-def create_refresh_token(subject: Union[str, Any], expires_delta: int = None) -> str:
-    if expires_delta is not None:
-        expires_delta = datetime.now(ZoneInfo('Asia/Jakarta')) + expires_delta
-    else:
-        expires_delta = datetime.now(ZoneInfo('Asia/Jakarta')) + timedelta(minutes=config.REFRESH_TOKEN_EXPIRE_MINUTES)
+    def create_refresh_token(subject: Union[str, Any], expires_delta: int = None) -> str:
+        if expires_delta is not None:
+            expires_delta = datetime.now(ZoneInfo('Asia/Jakarta')) + expires_delta
+        else:
+            expires_delta = datetime.now(ZoneInfo('Asia/Jakarta')) + timedelta(minutes=config.REFRESH_TOKEN_EXPIRE_MINUTES)
 
-    to_encode = {"exp": expires_delta, "sub": str(subject)}
-    encoded_jwt = jwt.encode(to_encode, config.JWT_REFRESH_SECRET_KEY, config.ALGORITHM)
-    return encoded_jwt
+        to_encode = {"exp": expires_delta, "sub": str(subject)}
+        encoded_jwt = jwt.encode(to_encode, config.JWT_REFRESH_SECRET_KEY, config.ALGORITHM)
+        return encoded_jwt
