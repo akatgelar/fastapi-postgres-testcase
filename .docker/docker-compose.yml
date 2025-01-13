@@ -1,0 +1,14 @@
+services:
+  web:
+    # build: .
+    image: ghcr.io/akatgelar/fastapi-postgres-testcase:latest
+    container_name: 'fastapi-postgres-testcase'
+    env_file:
+      - .env
+    ports:
+      - "2040:80"
+    # volumes:
+    #   - /home/app/fastapi-postgres-testcase/uploads:/var/www/public/uploads
+    #   - /home/app/fastapi-postgres-testcase/storage/framework:/var/www/storage/framework
+    #   - /home/app/fastapi-postgres-testcase/storage/logs:/var/www/storage/logs
+    restart: always
