@@ -6,11 +6,13 @@ from fastapi.exceptions import RequestValidationError
 
 from app.routes import content_route
 from app.routes import user_route
+from app.routes import auth_route
 
 app = FastAPI()
 
 app.include_router(content_route.router)
 app.include_router(user_route.router)
+app.include_router(auth_route.router)
 
 
 @app.get("/")

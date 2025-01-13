@@ -4,18 +4,26 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from passlib.context import CryptContext
 import os
+import json
 from datetime import datetime, timedelta
 from typing import Union, Any
 from jose import jwt
 from app.config.config import config
 from zoneinfo import ZoneInfo
+from fastapi.encoders import jsonable_encoder
 
 class Helper:
  
     def generate_response(action, data, status_code, is_success, pagination=None):
         messages = {
-            "sync": {"success": "Sync data successful", "failure": "Sync data failed"},
-            "get": {"success": "Get data successful", "failure": "Get data failed"},
+            "login": {
+                "success": "Login successful", 
+                "failure": "Login failed"
+            },
+            "get": {
+                "success": "Get data successful", 
+                "failure": "Get data failed"
+            },
             "create": {
                 "success": "Create data successful",
                 "failure": "Create data failed",
@@ -59,13 +67,13 @@ class Helper:
         password_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
         return password_context.verify(password, hashed_pass)
     
-    def create_access_token(subject: Union[str, Any], expires_delta: int = None) -> str:
+    def create_access_token(data: Union[str, Any], expires_delta: int = None) -> str:
         if expires_delta is not None:
             expires_delta = datetime.now(ZoneInfo('Asia/Jakarta')) + expires_delta
         else:
             expires_delta = datetime.now(ZoneInfo('Asia/Jakarta')) + timedelta(minutes=config.ACCESS_TOKEN_EXPIRE_MINUTES)
-
-        to_encode = {"exp": expires_delta, "sub": str(subject)}
+ 
+        to_encode = {"exp": expires_delta, "data": jsonable_encoder(data)}
         encoded_jwt = jwt.encode(to_encode, config.JWT_SECRET_KEY, config.ALGORITHM)
         return encoded_jwt
 
