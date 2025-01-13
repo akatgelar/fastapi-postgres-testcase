@@ -1,6 +1,7 @@
 #pylint: disable = no-value-for-parameter
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
+from app.helpers.jwt import JWTBearer
 from app.models.content_model import ContentSchema
 from app.controllers.content_controller import ContentController
 from app.config.database import get_db
@@ -24,7 +25,7 @@ def get_by_id(ids: int = 0, db: Session = Depends(get_db)):
     except HTTPException as e:
         raise HTTPException(status_code=500, detail=str(e)) from e
 
-@router.post("/content")
+@router.post("/content", dependencies=[Depends(JWTBearer())])
 def post(data: ContentSchema, db: Session = Depends(get_db)):
     try:
         result = ContentController.create(data, db)
@@ -32,7 +33,7 @@ def post(data: ContentSchema, db: Session = Depends(get_db)):
     except HTTPException as e:
         raise HTTPException(status_code=500, detail=str(e)) from e
 
-@router.put("/content/{ids}")
+@router.put("/content/{ids}", dependencies=[Depends(JWTBearer())])
 def put(data: ContentSchema, ids: int, db: Session = Depends(get_db)):
     try:
         result = ContentController.update(data, ids, db)
@@ -40,7 +41,7 @@ def put(data: ContentSchema, ids: int, db: Session = Depends(get_db)):
     except HTTPException as e:
         raise HTTPException(status_code=500, detail=str(e)) from e
 
-@router.delete("/content/{ids}")
+@router.delete("/content/{ids}", dependencies=[Depends(JWTBearer())])
 def delete(ids: int, db: Session = Depends(get_db)):
     try:
         result = ContentController.delete(ids, db)

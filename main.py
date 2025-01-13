@@ -42,3 +42,4 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
             "data": None,
         }
     ) 
+  
