@@ -15,7 +15,7 @@ pip install -r requirements.txt
 alembic upgrade head
 
 # run app
-uvicorn main:app --reload
+uvicorn app.main:app --reload
 
 # open app
 http://localhost:8000
@@ -23,8 +23,8 @@ http://localhost:8000
 # open documentation
 http://localhost:8000/docs
 
-
-
+# unit test
+pytest
 
 
 ## FOR DEV
