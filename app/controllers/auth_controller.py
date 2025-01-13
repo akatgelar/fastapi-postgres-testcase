@@ -18,7 +18,7 @@ class AuthController(object):
             
             del datas.password
             access_token = Helper.create_access_token(data=datas, expires_delta=None) 
-            result = {"access token" : access_token, "token_type": "bearer"}
+            result = {"access_token" : access_token, "token_type": "bearer"}
             return result
         except Exception as e:
             error_msg = f"Internal server error occurred: {str(e)}"
